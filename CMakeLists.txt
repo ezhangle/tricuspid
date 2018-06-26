@@ -14,7 +14,7 @@ find_package(Qt5Gui REQUIRED) # It's required because one of the include files i
 find_package(Bezitopo REQUIRED)
 
 add_executable(tricuspid tricuspid.cpp)
-target_link_libraries(tricuspid ${Bezitopo_LIBRARIES} Qt5::Widgets Qt5::Core)
+target_link_libraries(tricuspid ${Bezitopo_LIBRARY} Qt5::Widgets Qt5::Core)
 
 set(TRICUSPID_MAJOR_VERSION 0)
 set(TRICUSPID_MINOR_VERSION 1)
