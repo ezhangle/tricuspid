@@ -8,10 +8,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Gui REQUIRED) # It's required because one of the include files includes QPen.
 find_package(Bezitopo REQUIRED)
 
 add_executable(tricuspid tricuspid.cpp)
-target_link_libraries(tricuspid ${Bezitopo_LIBRARIES})
+target_link_libraries(tricuspid ${Bezitopo_LIBRARIES} Qt5::Widgets Qt5::Core)
 
 set(TRICUSPID_MAJOR_VERSION 0)
 set(TRICUSPID_MINOR_VERSION 1)
