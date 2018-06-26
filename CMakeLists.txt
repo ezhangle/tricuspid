@@ -20,7 +20,7 @@ set(TRICUSPID_VERSION ${TRICUSPID_MAJOR_VERSION}.${TRICUSPID_MINOR_VERSION}.${TR
 set(COPY_YEAR 2018)
 
 include_directories(${PROJECT_BINARY_DIR})
-include_directories(${Bezitopo_INCLUDES})
+include_directories(${Bezitopo_INCLUDE_DIR})
 configure_file (config.h.in config.h)
 
 set(CPACK_PACKAGE_VERSION_MAJOR ${TRICUSPID_MAJOR_VERSION})
