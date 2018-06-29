@@ -53,6 +53,26 @@ void testcircle()
   ps.close();
 }
 
+xy curvePoint(int angle,int a,int b)
+/* Computes the point on the curve defined by circles of sizes 1/a and 1/b,
+ * going a distance bintorad(angle) around both circles.
+ * a, b, a+b, and a-b must all be nonzero:
+ * a==0 or b==0 means the circle is infinite.
+ * a-b==0 means that the line goes through the same point twice and is indeterminate.
+ * a+b==0 means that all the lines are parallel, so the envelope is at infinity.
+ */
+{
+  xy apoint,bpoint,aspeed,bspeed;
+  double atorque,btorque;
+  apoint=cossin(angle*a)/a;
+  bpoint=cossin(angle*b)/b;
+  aspeed=cossin(angle*a+DEG90);
+  bspeed=cossin(angle*b+DEG90);
+  atorque=dot(turn90(aspeed),apoint-bpoint);
+  btorque=dot(turn90(bspeed),bpoint-apoint);
+  return (apoint*btorque+bpoint*atorque)/(atorque+btorque);
+}
+
 int main(int argc, char *argv[])
 {
   cout<<"tricuspid\n";
