@@ -73,9 +73,55 @@ xy curvePoint(int angle,int a,int b)
   return (apoint*btorque+bpoint*atorque)/(atorque+btorque);
 }
 
+polyline curvePart(int startAngle,int endAngle,int a,int b)
+{
+  int i,n;
+  double h;
+  polyline ret;
+  h=(endAngle-startAngle)/rint((endAngle-startAngle)/DEG1);
+  n=lrint((endAngle-startAngle)/h);
+  for (i=0;i<=n;i++)
+    ret.insert(curvePoint(startAngle+lrint(i*h),a,b));
+  ret.open();
+  return ret;
+}
+
+void drawcurve(int a,int b,PostScript &ps)
+{
+  Circle aCircle(xy(0,0),1./a);
+  Circle bCircle(xy(0,0),1./b);
+  int nparts=abs(a-b);
+  int i;
+  polyline part;
+  ps.setpaper(papersizes["A4 portrait"],0);
+  ps.prolog();
+  ps.startpage();
+  ps.setscale(-1,-1,1,1,degtobin(0));
+  ps.setcolor(1,0,1);
+  ps.spline(aCircle.approx3d(0.1/ps.getscale()));
+  ps.spline(bCircle.approx3d(0.1/ps.getscale()));
+  ps.setcolor(0,0,0);
+  for (i=0;i<nparts;i++)
+  {
+    part=curvePart(radtobin(i*2*M_PI/nparts)+FURMAN1,radtobin((i+1)*2*M_PI/nparts)-FURMAN1,a,b);
+    ps.spline(part.approx3d(0.1/ps.getscale()));
+  }
+  ps.endpage();
+}
+
 int main(int argc, char *argv[])
 {
-  cout<<"tricuspid\n";
+  PostScript ps;
   testcircle();
+  ps.open("tricuspid.ps");
+  drawcurve(1,2,ps);
+  drawcurve(1,3,ps);
+  drawcurve(2,3,ps);
+  drawcurve(1,4,ps);
+  drawcurve(3,4,ps);
+  drawcurve(1,5,ps);
+  drawcurve(2,5,ps);
+  drawcurve(3,5,ps);
+  drawcurve(4,5,ps);
   return 0;
 }
