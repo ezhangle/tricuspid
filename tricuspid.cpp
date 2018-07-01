@@ -124,5 +124,7 @@ int main(int argc, char *argv[])
     for (a=-b;a<b;a++)
       if (gcd(abs(a),b)==1)
 	drawcurve(a,b,ps);
+  for (a=1,b=2;b<2;b+=a,a=b-a)
+    drawcurve(b-a,b,ps);
   return 0;
 }
