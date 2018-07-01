@@ -114,6 +114,18 @@ void drawcurve(int a,int b,PostScript &ps)
   ps.endpage();
 }
 
+bool check142(int angle)
+/* The curves for (-1,2) and (1,4) look identical, except that one is -2 times
+ * as big as the other. Check that the points on circles of radius 1, 1/4,
+ * and -1/2 are in a straight line.
+ */
+{
+  xy pt1=cossin(angle);
+  xy pt4=cossin(angle*4)/4;
+  xy pt2=cossin(-angle*2)/-2;
+  return fabs(pldist(pt4,pt2,pt1))<1e-6;
+}
+
 int main(int argc, char *argv[])
 {
   int a,b;
@@ -126,5 +138,6 @@ int main(int argc, char *argv[])
 	drawcurve(a,b,ps);
   for (a=1,b=2;b<2;b+=a,a=b-a)
     drawcurve(b-a,b,ps);
+  cout<<check142(DEG1)<<endl;
   return 0;
 }
