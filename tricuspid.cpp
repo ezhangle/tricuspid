@@ -77,11 +77,16 @@ polyline curvePart(int startAngle,int endAngle,int a,int b)
 {
   int i,n;
   double h;
+  xy pnt;
   polyline ret;
   h=(endAngle-startAngle)/rint((endAngle-startAngle)/DEG1);
   n=lrint((endAngle-startAngle)/h);
   for (i=0;i<=n;i++)
-    ret.insert(curvePoint(startAngle+lrint(i*h),a,b));
+  {
+    pnt=curvePoint(startAngle+lrint(i*h),a,b);
+    if (pnt.length()<256)
+      ret.insert(pnt);
+  }
   ret.open();
   return ret;
 }
