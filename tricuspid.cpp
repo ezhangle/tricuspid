@@ -116,17 +116,13 @@ void drawcurve(int a,int b,PostScript &ps)
 
 int main(int argc, char *argv[])
 {
+  int a,b;
   PostScript ps;
   testcircle();
   ps.open("tricuspid.ps");
-  drawcurve(1,2,ps);
-  drawcurve(1,3,ps);
-  drawcurve(2,3,ps);
-  drawcurve(1,4,ps);
-  drawcurve(3,4,ps);
-  drawcurve(1,5,ps);
-  drawcurve(2,5,ps);
-  drawcurve(3,5,ps);
-  drawcurve(4,5,ps);
+  for (b=2;b<6;b++)
+    for (a=-b;a<b;a++)
+      if (gcd(abs(a),b)==1)
+	drawcurve(a,b,ps);
   return 0;
 }
