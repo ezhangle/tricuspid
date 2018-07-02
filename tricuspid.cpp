@@ -79,13 +79,23 @@ polyline curvePart(int startAngle,int endAngle,int a,int b)
   double h;
   xy pnt;
   polyline ret;
+  const int clipto=256;
+  int midAngle=startAngle+(endAngle-startAngle)/2;
+  brent br;
+  startAngle=br.init(startAngle-midAngle,curvePoint(startAngle,a,b).length()-clipto,
+		     0,curvePoint(midAngle,a,b).length()-clipto,true)+midAngle;
+  while (!br.finished())
+    startAngle=br.step(curvePoint(startAngle,a,b).length()-clipto)+midAngle;
+  endAngle=br.init(endAngle-midAngle,curvePoint(endAngle,a,b).length()-clipto,
+		   0,curvePoint(midAngle,a,b).length()-clipto,true)+midAngle;
+  while (!br.finished())
+    endAngle=br.step(curvePoint(endAngle,a,b).length()-clipto)+midAngle;
   h=(endAngle-startAngle)/rint((endAngle-startAngle)/DEG1);
   n=lrint((endAngle-startAngle)/h);
   for (i=0;i<=n;i++)
   {
     pnt=curvePoint(startAngle+lrint(i*h),a,b);
-    if (pnt.length()<256)
-      ret.insert(pnt);
+    ret.insert(pnt);
   }
   ret.open();
   return ret;
@@ -132,11 +142,11 @@ int main(int argc, char *argv[])
   PostScript ps;
   testcircle();
   ps.open("tricuspid.ps");
-  for (b=2;b<2;b++)
+  for (b=2;b<6;b++)
     for (a=-b;a<b;a++)
       if (gcd(abs(a),b)==1)
 	drawcurve(a,b,ps);
-  for (a=1,b=2;b<2;b+=a,a=b-a)
+  for (a=1,b=2;b<35;b+=a,a=b-a)
     drawcurve(b-a,b,ps);
   cout<<check142(DEG1)<<endl;
   drawcurve(1,3,ps); //in
