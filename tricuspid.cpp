@@ -132,12 +132,16 @@ int main(int argc, char *argv[])
   PostScript ps;
   testcircle();
   ps.open("tricuspid.ps");
-  for (b=2;b<6;b++)
+  for (b=2;b<2;b++)
     for (a=-b;a<b;a++)
       if (gcd(abs(a),b)==1)
 	drawcurve(a,b,ps);
   for (a=1,b=2;b<2;b+=a,a=b-a)
     drawcurve(b-a,b,ps);
   cout<<check142(DEG1)<<endl;
+  drawcurve(1,3,ps); //in
+  drawcurve(1,4,ps); //out
+  drawcurve(2,7,ps); //out
+  drawcurve(3,10,ps); //in
   return 0;
 }
