@@ -73,6 +73,22 @@ xy curvePoint(int angle,int a,int b)
   return (apoint*btorque+bpoint*atorque)/(atorque+btorque);
 }
 
+xy curvePoint(double angle,double a,double b)
+/* Same as above, but the b circle is rotated 180° so that a cusp, not an
+ * asymptote, is at angle=0. angle is in radians.
+ */
+{
+  xy apoint,bpoint,aspeed,bspeed;
+  double atorque,btorque;
+  apoint=cossin(angle*a)/a;
+  bpoint=-cossin(angle*b)/b;
+  aspeed=cossin(angle*a+M_PI/2);
+  bspeed=-cossin(angle*b+M_PI/2);
+  atorque=dot(turn90(aspeed),apoint-bpoint);
+  btorque=dot(turn90(bspeed),bpoint-apoint);
+  return (apoint*btorque+bpoint*atorque)/(atorque+btorque);
+}
+
 polyline curvePart(int startAngle,int endAngle,int a,int b)
 {
   int i,n;
