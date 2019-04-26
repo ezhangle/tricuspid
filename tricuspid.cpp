@@ -168,6 +168,26 @@ void drawcurve(int a,int b,PostScript &ps)
   ps.endpage();
 }
 
+void drawcurve(double a,double b,PostScript &ps)
+{
+  Circle aCircle(xy(0,0),1./a);
+  Circle bCircle(xy(0,0),1./b);
+  double nparts=abs(a-b);
+  polyline part;
+  ps.setpaper(papersizes["A4 portrait"],0);
+  ps.prolog();
+  ps.startpage();
+  ps.setscale(-1,-1,1,1,degtobin(0));
+  ps.setcolor(1,0,1);
+  ps.spline(aCircle.approx3d(0.1/ps.getscale()));
+  ps.spline(bCircle.approx3d(0.1/ps.getscale()));
+  ps.setcolor(0,0,0);
+  // Unlike the integer case, it makes no sense to draw multiple parts if a and b are irrational.
+  part=curvePart(-M_PI/nparts+1e-9,M_PI/nparts-1e-9,a,b);
+  ps.spline(part.approx3d(0.1/ps.getscale()));
+  ps.endpage();
+}
+
 bool check142(int angle)
 /* The curves for (-1,2) and (1,4) look identical, except that one is -2 times
  * as big as the other. Check that the points on circles of radius 1, 1/4,
@@ -197,5 +217,6 @@ int main(int argc, char *argv[])
   drawcurve(1,4,ps); //out
   drawcurve(2,7,ps); //out
   drawcurve(3,10,ps); //in
+  drawcurve(3.,10.,ps);
   return 0;
 }
