@@ -127,14 +127,14 @@ polyline curvePart(double startAngle,double endAngle,double a,double b)
   double midAngle=(startAngle+endAngle)/2;
   brent br;
   startAngle=br.init(startAngle-midAngle,curvePoint(startAngle,a,b).length()-clipto,
-		     0,curvePoint(midAngle,a,b).length()-clipto,true)+midAngle;
+		     0,curvePoint(midAngle,a,b).length()-clipto,false)+midAngle;
   while (!br.finished())
     startAngle=br.step(curvePoint(startAngle,a,b).length()-clipto)+midAngle;
   endAngle=br.init(endAngle-midAngle,curvePoint(endAngle,a,b).length()-clipto,
-		   0,curvePoint(midAngle,a,b).length()-clipto,true)+midAngle;
+		   0,curvePoint(midAngle,a,b).length()-clipto,false)+midAngle;
   while (!br.finished())
     endAngle=br.step(curvePoint(endAngle,a,b).length()-clipto)+midAngle;
-  h=(endAngle-startAngle)/rint((endAngle-startAngle)/DEG1);
+  h=(endAngle-startAngle)/rint((endAngle-startAngle)*57);
   n=lrint((endAngle-startAngle)/h);
   for (i=0;i<=n;i++)
   {
