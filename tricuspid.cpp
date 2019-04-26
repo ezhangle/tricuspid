@@ -117,6 +117,34 @@ polyline curvePart(int startAngle,int endAngle,int a,int b)
   return ret;
 }
 
+polyline curvePart(double startAngle,double endAngle,double a,double b)
+{
+  int i,n;
+  double h;
+  xy pnt;
+  polyline ret;
+  const int clipto=256;
+  double midAngle=(startAngle+endAngle)/2;
+  brent br;
+  startAngle=br.init(startAngle-midAngle,curvePoint(startAngle,a,b).length()-clipto,
+		     0,curvePoint(midAngle,a,b).length()-clipto,true)+midAngle;
+  while (!br.finished())
+    startAngle=br.step(curvePoint(startAngle,a,b).length()-clipto)+midAngle;
+  endAngle=br.init(endAngle-midAngle,curvePoint(endAngle,a,b).length()-clipto,
+		   0,curvePoint(midAngle,a,b).length()-clipto,true)+midAngle;
+  while (!br.finished())
+    endAngle=br.step(curvePoint(endAngle,a,b).length()-clipto)+midAngle;
+  h=(endAngle-startAngle)/rint((endAngle-startAngle)/DEG1);
+  n=lrint((endAngle-startAngle)/h);
+  for (i=0;i<=n;i++)
+  {
+    pnt=curvePoint(startAngle+i*h,a,b);
+    ret.insert(pnt);
+  }
+  ret.open();
+  return ret;
+}
+
 void drawcurve(int a,int b,PostScript &ps)
 {
   Circle aCircle(xy(0,0),1./a);
