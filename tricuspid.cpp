@@ -215,7 +215,7 @@ double est2Deriv(double a,double b)
   {
     xval[i]=curvePoint(angle,a,b).getx();
     der2[i]=2*(xval[i]-x0)/sqr(angle);
-    cout<<setw(2)<<i<<' '<<ldecimal(der2[i])<<endl;
+    //cout<<setw(2)<<i<<' '<<ldecimal(der2[i])<<endl;
   }
   return der2[14];
 }
@@ -223,6 +223,8 @@ double est2Deriv(double a,double b)
 int main(int argc, char *argv[])
 {
   int a,b;
+  double bd;
+  brent br;
   PostScript ps;
   testcircle();
   ps.open("tricuspid.ps");
@@ -239,7 +241,11 @@ int main(int argc, char *argv[])
   drawcurve(3,10,ps); //in
   drawcurve(1.,10/3.,ps);
   est2Deriv(1.,10/3);
-  drawcurve(1.,3.4,ps);
-  est2Deriv(1.,3.4);
+  bd=br.init(3.3,est2Deriv(1.,3.3),4,est2Deriv(1.,4.));
+  while (!br.finished())
+    bd=br.step(est2Deriv(1.,bd));
+  cout<<"4/5 cusp at b="<<bd<<endl;
+  drawcurve(1.,bd,ps);
+  est2Deriv(1.,bd);
   return 0;
 }
