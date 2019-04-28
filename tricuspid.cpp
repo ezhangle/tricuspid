@@ -217,6 +217,6 @@ int main(int argc, char *argv[])
   drawcurve(1,4,ps); //out
   drawcurve(2,7,ps); //out
   drawcurve(3,10,ps); //in
-  drawcurve(3.,10.,ps);
+  drawcurve(1.,10/3.,ps);
   return 0;
 }
