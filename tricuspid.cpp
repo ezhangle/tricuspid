@@ -5,6 +5,7 @@
 /******************************************************/
 
 #include <iostream>
+#include <iomanip>
 #include <bezitopo.h>
 using namespace std;
 
@@ -200,6 +201,25 @@ bool check142(int angle)
   return fabs(pldist(pt4,pt2,pt1))<1e-6;
 }
 
+double est2Deriv(double a,double b)
+/* Estimates the second derivative of x with respect to the angle at the cusp.
+ * The cusp changes from triple to single when the second derivative is 0.
+ * When it is 0, the cusp is a 4/5 cusp, instead of the usual 2/3 cusp(s).
+ */
+{
+  const int num=26;
+  double xval[num],x0,der2[num],angle;
+  int i;
+  x0=curvePoint(0.,a,b).getx();
+  for (i=0,angle=1;i<num;i++,angle/=2)
+  {
+    xval[i]=curvePoint(angle,a,b).getx();
+    der2[i]=2*(xval[i]-x0)/sqr(angle);
+    cout<<setw(2)<<i<<' '<<ldecimal(der2[i])<<endl;
+  }
+  return der2[14];
+}
+
 int main(int argc, char *argv[])
 {
   int a,b;
@@ -218,5 +238,8 @@ int main(int argc, char *argv[])
   drawcurve(2,7,ps); //out
   drawcurve(3,10,ps); //in
   drawcurve(1.,10/3.,ps);
+  est2Deriv(1.,10/3);
+  drawcurve(1.,3.4,ps);
+  est2Deriv(1.,3.4);
   return 0;
 }
