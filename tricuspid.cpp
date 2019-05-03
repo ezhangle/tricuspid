@@ -237,9 +237,10 @@ int main(int argc, char *argv[])
   cout<<check142(DEG1)<<endl;
   drawcurve(1,3,ps); //in
   drawcurve(1,4,ps); //out
-  drawcurve(2,7,ps); //out
+  drawcurve(2,7,ps); //in
   drawcurve(3,10,ps); //in
   drawcurve(1.,10/3.,ps);
+  drawcurve(1.,3.5,ps);
   est2Deriv(1.,10/3);
   bd=br.init(3.3,est2Deriv(1.,3.3),4,est2Deriv(1.,4.));
   while (!br.finished())
