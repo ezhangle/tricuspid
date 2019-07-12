@@ -171,6 +171,8 @@ void drawcurve(int a,int b,PostScript &ps)
 
 void drawcurve(double a,double b,PostScript &ps)
 {
+  int i,n;
+  double h=degtorad(10);
   Circle aCircle(xy(0,0),1./a);
   Circle bCircle(xy(0,0),1./b);
   double nparts=abs(a-b);
@@ -182,6 +184,10 @@ void drawcurve(double a,double b,PostScript &ps)
   ps.setcolor(1,0,1);
   ps.spline(aCircle.approx3d(0.1/ps.getscale()));
   ps.spline(bCircle.approx3d(0.1/ps.getscale()));
+  n=trunc(M_PI/nparts/h);
+  ps.setcolor(0,1,0);
+  for (i=-n;i<=n;i++)
+    ps.line2p(-aCircle.station(i*h),bCircle.station(i*h));
   ps.setcolor(0,0,0);
   // Unlike the integer case, it makes no sense to draw multiple parts if a and b are irrational.
   part=curvePart(-M_PI/nparts+1e-9,M_PI/nparts-1e-9,a,b);
