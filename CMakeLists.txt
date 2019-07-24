@@ -8,9 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Gui REQUIRED) # It's required because one of the include files includes QPen.
+find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+# GUI is required because one of the include files includes QPen.
 find_package(Bezitopo REQUIRED)
 
 add_executable(tricuspid tricuspid.cpp)
@@ -20,7 +19,7 @@ set(TRICUSPID_MAJOR_VERSION 0)
 set(TRICUSPID_MINOR_VERSION 1)
 set(TRICUSPID_PATCH_VERSION 0)
 set(TRICUSPID_VERSION ${TRICUSPID_MAJOR_VERSION}.${TRICUSPID_MINOR_VERSION}.${TRICUSPID_PATCH_VERSION})
-set(COPY_YEAR 2018)
+set(COPY_YEAR 2019)
 
 include_directories(${PROJECT_BINARY_DIR})
 include_directories(${Bezitopo_INCLUDE_DIR})

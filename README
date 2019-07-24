@@ -2,6 +2,8 @@ Tricuspid is a program for investigating a curve that appeared in the Bezitopo c
 
 For some ratios between the two circle sizes, the curve has three cusps (of the usual 2/3 type); for others it has one. When the ratio is 2+√3 or 2-√3 (which are reciprocals, thus exchanging circles), it has one cusp of 4/5 type.
 
+This program uses the Bezitopo library. See http://bezitopo.org/developers.html for instructions.
+
 To compile, if you're not developing the program:
 1. Create a subdirectory build/ inside the directory where you untarred the source code.
 2. cd build
@@ -9,7 +11,9 @@ To compile, if you're not developing the program:
 4. make
 
 If you are developing the program:
-1. Create a directory build/mirasol outside the directory where you cloned the source code.
-2. cd build/mirasol
+1. Create a directory build/tricuspid outside the directory where you cloned the source code.
+2. cd build/tricuspid
 3. cmake <directory where the source code is>
 4. make
+
+To build on Windows, see the instructions on bezitopo.org.
