@@ -1,0 +1,15 @@
+Tricuspid is a program for investigating a curve that appeared in the Bezitopo circle test. Draw two concentric circles, one twice the radius of the other. Walk around both circles simultaneously at the same linear speed; thus the one on the inner circle walks at twice the angular speed. Draw lines connecting the two walkers. The envelope of the lines has two connected parts, each with three cusps.
+
+For some ratios between the two circle sizes, the curve has three cusps (of the usual 2/3 type); for others it has one. When the ratio is 2+√3 or 2-√3 (which are reciprocals, thus exchanging circles), it has one cusp of 4/5 type.
+
+To compile, if you're not developing the program:
+1. Create a subdirectory build/ inside the directory where you untarred the source code.
+2. cd build
+3. cmake ..
+4. make
+
+If you are developing the program:
+1. Create a directory build/mirasol outside the directory where you cloned the source code.
+2. cd build/mirasol
+3. cmake <directory where the source code is>
+4. make
